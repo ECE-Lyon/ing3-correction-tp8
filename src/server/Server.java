@@ -12,7 +12,9 @@ public class Server {
         Socket socket = ssock.accept();
 
         try (BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
-            System.out.println(br.readLine());
+            while (true) {
+                System.out.println(br.readLine());
+            }
         }
     }
 }
