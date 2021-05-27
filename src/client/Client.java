@@ -13,9 +13,15 @@ public class Client {
         Socket sock = new Socket("127.0.0.1", 1235);
         try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(sock.getOutputStream()))) {
             while (true) {
-                bw.write(scanner.nextLine());
+                String line = scanner.nextLine();
+
+                bw.write(line);
                 bw.newLine();
                 bw.flush();
+
+                if (line.equals("quit")) {
+                    break;
+                }
             }
         }
     }
