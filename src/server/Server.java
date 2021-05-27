@@ -13,16 +13,20 @@ public class Server {
         while (true) {
             Socket socket = ssock.accept();
 
-            try (BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
-                while (true) {
-                    String line = br.readLine();
-                    System.out.println(line);
+            new Thread(() -> {
+                try (BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
+                    while (true) {
+                        String line = br.readLine();
+                        System.out.println(Thread.currentThread().getName() + ": " + line);
 
-                    if (line.equals("quit")) {
-                        break;
+                        if (line.equals("quit")) {
+                            break;
+                        }
                     }
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-            }
+            }).start();
         }
     }
 }
